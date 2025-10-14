@@ -13,13 +13,13 @@ export default function DashboardShell({
 
   return (
     <div className="flex h-screen max-h-screen bg-gray-50 overflow-hidden">
-      {/* 🧭 Sidebar */}
+      {/*  Sidebar */}
       <DashboardSidebar
         isOpen={isSidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
 
-      {/* 🧠 Main Content Area */}
+      {/*  Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* ☰ Mobile Toggle Button */}
         <header className="md:hidden flex items-center gap-2 p-4 border-b bg-white shadow-sm">

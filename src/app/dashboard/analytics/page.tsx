@@ -15,7 +15,15 @@ import {
   Cell,
 } from "recharts";
 import { ClipLoader } from "react-spinners";
-import { Trophy, Brain, BookOpen, ClipboardList } from "lucide-react";
+import {
+  Trophy,
+  Brain,
+  BookOpen,
+  ClipboardList,
+  ChartNoAxesCombined,
+  Activity,
+  ChartPie,
+} from "lucide-react";
 
 const COLORS = ["#2563eb", "#22c55e", "#facc15", "#ef4444"];
 
@@ -78,7 +86,10 @@ export default function AnalyticsPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-semibold mb-4">Your Learning Analytics</h1>
+      <h2 className="flex items-center gap-2 text-2xl font-semibold mb-4">
+        <ChartPie className="w-5 h-5" />
+        Your Learning Analytics
+      </h2>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -111,9 +122,11 @@ export default function AnalyticsPage() {
       {/* Performance Chart */}
       <Card className="shadow-md border">
         <CardContent className="p-6">
-          <h2 className="text-lg font-semibold mb-4">
+          <h2 className="flex items-center gap-2 text-lg font-semibold mb-4">
+            <ChartNoAxesCombined className="w-5 h-5" />
             Quiz Performance Over Time
           </h2>
+
           {stats.quizHistory?.length ? (
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={stats.quizHistory}>
@@ -134,7 +147,11 @@ export default function AnalyticsPage() {
       {/* Activity Distribution */}
       <Card className="shadow-md border">
         <CardContent className="p-6">
-          <h2 className="text-lg font-semibold mb-4">Activity Breakdown</h2>
+          <h2 className="flex items-center gap-2 text-lg font-semibold mb-4">
+            <Activity className="w-5 h-5" />
+            Activity Breakdown
+          </h2>
+
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie

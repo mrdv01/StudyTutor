@@ -21,7 +21,7 @@ const navItems = [
   { name: "Saved Quizzes", href: "/dashboard/quizzes", icon: ClipboardList },
   { name: "Saved Q&A", href: "/dashboard/qa/saved", icon: HelpCircle },
   { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
+  // { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 export function DashboardSidebar({
