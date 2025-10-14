@@ -6,7 +6,13 @@ import { createClient } from "@/lib/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, RotateCcw, Save } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  RotateCcw,
+  Save,
+  PartyPopper,
+} from "lucide-react";
 import confetti from "canvas-confetti";
 import Swal from "sweetalert2";
 import { ClipLoader } from "react-spinners";
@@ -151,12 +157,16 @@ export default function QAPlayPage() {
     setShowAnswer(false);
   };
 
-  // 🎉 Finished view
+  //  Finished view
   if (finished)
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
         <Card className="max-w-lg w-full p-6 text-center shadow-lg bg-white">
-          <h2 className="text-2xl font-bold mb-3">🎉 Great job!</h2>
+          <h2 className="flex items-center gap-2 text-2xl font-bold mb-3">
+            <PartyPopper className="w-6 h-6" />
+            Great job!
+          </h2>
+
           <p className="text-gray-600 mb-4">
             You’ve completed all {total} short-answer questions.
           </p>
@@ -174,7 +184,7 @@ export default function QAPlayPage() {
       </div>
     );
 
-  // 🧠 Practice Mode
+  // Practice Mode
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
       <Card className="max-w-lg w-full p-6 shadow-md bg-white">

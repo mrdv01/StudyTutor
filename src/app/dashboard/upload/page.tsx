@@ -9,7 +9,7 @@ export default function UploadNotes() {
   const [file, setFile] = useState<File | null>(null);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null); // 👈 new ref
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const supabase = createClient();
 

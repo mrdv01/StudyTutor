@@ -16,7 +16,7 @@ export default function SavedQuizzesPage() {
   const [quizzes, setQuizzes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 🧠 Fetch saved quizzes
+  //  Fetch saved quizzes
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
@@ -44,7 +44,7 @@ export default function SavedQuizzesPage() {
     fetchQuizzes();
   }, []);
 
-  // 🗑️ Handle quiz deletion
+  //  Handle quiz deletion
   const handleDelete = async (id: string) => {
     const confirm = await Swal.fire({
       title: "Delete Quiz?",

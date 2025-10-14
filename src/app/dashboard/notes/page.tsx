@@ -11,6 +11,8 @@ import {
   Loader2,
   Sparkles,
   Eye,
+  MessageCircle,
+  Notebook,
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { ClipLoader } from "react-spinners";
@@ -77,7 +79,7 @@ export default function NotesPage() {
     if (data.summary) {
       Swal.fire({
         icon: "success",
-        title: "Summary Generated ✅",
+        title: "Summary Generated",
         html: `<div style="text-align:left;">${marked.parse(
           data.summary
         )}</div>`,
@@ -134,14 +136,17 @@ export default function NotesPage() {
   if (notes.length === 0)
     return (
       <p className="text-center mt-10 text-gray-600">
-        You haven’t uploaded any notes yet. 📄
+        You haven’t uploaded any notes yet.
       </p>
     );
 
   //  Render Notes
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-semibold mb-4">📚 My Saved Notes</h1>
+      <h1 className="flex items-center gap-2 text-2xl font-semibold mb-4">
+        <Notebook className="w-6 h-6" />
+        My Saved Notes
+      </h1>
 
       {notes.map((note) => (
         <Card key={note.id} className="border-gray-200 shadow-sm">
@@ -210,7 +215,7 @@ export default function NotesPage() {
                     router.push(`/dashboard/chat?noteId=${note.id}`)
                   }
                 >
-                  💬 Chat
+                  <MessageCircle className="w-4 h-4" /> Chat
                 </Button>
 
                 <Button
@@ -248,7 +253,7 @@ export default function NotesPage() {
         </Card>
       ))}
 
-      {/* 🪄 Summary Modal */}
+      {/*  Summary Modal */}
       {selectedNote && (
         <SummaryModal
           open={!!selectedNote}

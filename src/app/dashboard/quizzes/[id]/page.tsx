@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import confetti from "canvas-confetti";
 import { ClipLoader } from "react-spinners";
+import { PartyPopper } from "lucide-react";
 
 export default function ReplayQuizPage() {
   const params = useParams();
@@ -73,7 +74,11 @@ export default function ReplayQuizPage() {
   return finished ? (
     <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
       <Card className="max-w-xl w-full p-6 text-center shadow-lg bg-white">
-        <h2 className="text-2xl font-bold mb-2">🎉 Quiz Completed!</h2>
+        <h2 className="flex items-center gap-2 text-2xl font-bold mb-3">
+          <PartyPopper className="w-6 h-6" />
+          Great job!
+        </h2>
+
         <p className="text-lg mb-6">
           You scored <strong>{score}</strong> out of <strong>{total}</strong>
         </p>

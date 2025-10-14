@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowRight, RotateCcw, Eye } from "lucide-react";
 import confetti from "canvas-confetti";
 import Swal from "sweetalert2";
 import { ClipLoader } from "react-spinners";
@@ -24,7 +24,7 @@ export default function ReplayQAPage() {
   const [loading, setLoading] = useState(true);
   const [finished, setFinished] = useState(false);
 
-  // 🧠 Fetch saved Q&A from Supabase
+  //  Fetch saved Q&A from Supabase
   useEffect(() => {
     const fetchQA = async () => {
       if (!id) return;
@@ -116,7 +116,7 @@ export default function ReplayQAPage() {
   const progress = ((current + 1) / total) * 100;
   const item = qaData.qa[current];
 
-  // 🎉 Finished view
+  //  Finished view
   if (finished)
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
@@ -139,7 +139,7 @@ export default function ReplayQAPage() {
       </div>
     );
 
-  // 🧩 Practice view
+  //  Practice view
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
       <Card className="max-w-lg w-full p-6 shadow-md bg-white">
@@ -167,7 +167,8 @@ export default function ReplayQAPage() {
         ) : (
           <div className="text-center mb-4">
             <Button onClick={() => setShowAnswer(true)} className="mt-2">
-              👀 Show Answer
+              <Eye className="w-4 h-4" />
+              Show Answer
             </Button>
           </div>
         )}

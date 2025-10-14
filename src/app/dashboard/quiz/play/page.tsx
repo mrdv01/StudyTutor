@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import confetti from "canvas-confetti";
 import { ClipLoader } from "react-spinners";
 import Swal from "sweetalert2";
+import { PartyPopper, Save } from "lucide-react";
 const supabase = createClient();
 
 export default function QuizPlayPage() {
@@ -106,7 +107,10 @@ export default function QuizPlayPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
         <Card className="max-w-xl w-full p-6 text-center shadow-lg bg-white">
-          <h2 className="text-2xl font-bold mb-2">🎉 Quiz Completed!</h2>
+          <h2 className="text-2xl font-bold mb-3">
+            {" "}
+            <PartyPopper className="w-4 h-4" /> Quiz Completed!
+          </h2>
           <p className="text-lg mb-6">
             You scored <strong>{score}</strong> out of <strong>{total}</strong>
           </p>
@@ -130,7 +134,7 @@ export default function QuizPlayPage() {
               Back to Dashboard
             </Button>
             <Button onClick={handleSaveQuiz} variant="outline">
-              💾 Save Quiz
+              <Save className="w-4 h-4" /> Save Quiz
             </Button>
           </div>
         </Card>

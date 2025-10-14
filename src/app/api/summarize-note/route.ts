@@ -37,7 +37,7 @@ Title: ${note.title}
 Content: """${note.content}"""
 `;
 
-    // 🧠 Retry logic for overloaded model (max 3 retries)
+    //  Retry logic for overloaded model (max 3 retries)
     let result;
     let retries = 3;
     while (retries > 0) {
