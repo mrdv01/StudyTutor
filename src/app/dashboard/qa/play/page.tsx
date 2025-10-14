@@ -12,6 +12,7 @@ import {
   RotateCcw,
   Save,
   PartyPopper,
+  Eye,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import Swal from "sweetalert2";
@@ -207,7 +208,8 @@ export default function QAPlayPage() {
         ) : (
           <div className="text-center mb-4">
             <Button onClick={() => setShowAnswer(true)} className="mt-2">
-              👀 Show Answer
+              <Eye className="w-4 h-4" />
+              Show Answer
             </Button>
           </div>
         )}
