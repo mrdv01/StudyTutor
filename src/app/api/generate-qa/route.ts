@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { createClient } from "@/lib/supabase/server";
-
+import { extractGeminiText, cleanJsonResponse } from "@/lib/gemini-utils";
 const ai = new GoogleGenAI({});
 
 export async function POST(req: Request) {
@@ -54,11 +54,8 @@ Here is the note:
       contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
-    let text =
-      result?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      result?.response?.text?.() ||
-      "";
-    text = text.replace(/```json|```/g, "").trim();
+    let text = extractGeminiText(result);
+    text = cleanJsonResponse(text);
 
     const qaData = JSON.parse(text);
 

@@ -16,17 +16,21 @@ export async function POST(req: Request) {
   try {
     const { messages, noteId } = await req.json();
     const userMsg = messages[messages.length - 1].content;
-    // 🧬 1️⃣ Create embedding for user's query
-    const queryEmbedding = await ai.models.embedContent({
+    // 1 Create embedding for user's query
+    const queryEmbedding = await (ai.models as any).embedContent({
       model: "gemini-embedding-001",
       contents: [userMsg],
       taskType: "RETRIEVAL_QUERY",
-      outputDimensionality: 3072, // must match your Supabase vector size
+      outputDimensionality: 3072,
     });
 
-    const queryVector = queryEmbedding.embeddings[0].values;
+    if (!queryEmbedding?.embeddings?.[0]?.values) {
+      console.error("Embedding generation failed:", queryEmbedding);
+      throw new Error("Failed to generate embedding vector.");
+    }
 
-    // 🔎 2️⃣ Retrieve top 3 most relevant note chunks using SQL RPC
+    const queryVector = queryEmbedding.embeddings[0].values;
+    //  Retrieve top 3 most relevant note chunks using SQL RPC
     const { data: matches, error } = await supabaseAdmin.rpc(
       "match_note_chunks",
       {

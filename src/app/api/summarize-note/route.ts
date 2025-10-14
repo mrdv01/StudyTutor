@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { createClient } from "@/lib/supabase/server";
+import { extractGeminiText, cleanJsonResponse } from "@/lib/gemini-utils";
 
 const ai = new GoogleGenAI({});
 
@@ -58,16 +59,11 @@ Content: """${note.content}"""
       }
     }
 
-    // 🔍 Extract summary text safely
-    let text = "";
-    if (result?.response?.text) text = result.response.text();
-    else if (result?.candidates?.[0]?.content?.parts?.[0]?.text)
-      text = result.candidates[0].content.parts[0].text;
-    else throw new Error("Invalid Gemini API response format");
+    //  Extract summary text safely
+    let text = extractGeminiText(result);
+    text = cleanJsonResponse(text);
 
-    text = text.replace(/```/g, "").trim();
-
-    // 💾 Save to DB
+    // Save to DB
     const { error: updateError } = await supabase
       .from("notes")
       .update({ summary: text })

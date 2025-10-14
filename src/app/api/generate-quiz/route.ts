@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { createClient } from "@/lib/supabase/server";
-
+import { extractGeminiText, cleanJsonResponse } from "@/lib/gemini-utils";
 const ai = new GoogleGenAI({});
 
 export async function POST(req: Request) {
@@ -78,18 +78,9 @@ Generate a quiz based on these notes:
       contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
-    // 🧩 Extract clean JSON text
-    let text = "";
-    if (result?.response?.text) {
-      text = result.response.text();
-    } else if (result?.candidates?.[0]?.content?.parts?.[0]?.text) {
-      text = result.candidates[0].content.parts[0].text;
-    } else {
-      console.error("Unexpected Gemini API response format:", result);
-      throw new Error("Invalid Gemini API response format");
-    }
-
-    text = text.replace(/```json|```/g, "").trim();
+    //  Extract clean JSON text
+    let text = extractGeminiText(result);
+    text = cleanJsonResponse(text);
 
     //  Parse quiz JSON safely
     let quizData;

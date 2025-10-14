@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     console.log(`Generating embeddings for ${chunks.length} chunks...`);
 
     //  Generate embeddings using the new Gemini Embedding API
-    const response = await ai.models.embedContent({
+    const response = await (ai.models as any).embedContent({
       model: "gemini-embedding-001",
       contents: chunks,
       taskType: "RETRIEVAL_DOCUMENT", // optimized for storing document embeddings
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     const userId = noteData?.user_id;
     //  Save each chunk + embedding into Supabase
     const { error } = await supabase.from("note_chunks").insert(
-      chunks.map((chunk, i) => ({
+      chunks.map((chunk: any, i: number) => ({
         note_id: noteId,
         user_id: userId,
         content: chunk,
