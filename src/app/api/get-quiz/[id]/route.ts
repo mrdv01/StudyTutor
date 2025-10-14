@@ -13,7 +13,7 @@ export async function GET(
     if (!user)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { id } = params;
+    const { id } = await params;
 
     const { data, error } = await supabase
       .from("quizzes")
