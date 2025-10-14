@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     return new Response("Unauthorized", { status: 401 });
   }
   try {
-    const { messages, userId, noteId } = await req.json();
+    const { messages, noteId } = await req.json();
     const userMsg = messages[messages.length - 1].content;
     // 🧬 1️⃣ Create embedding for user's query
     const queryEmbedding = await ai.models.embedContent({

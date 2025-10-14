@@ -67,6 +67,7 @@ export default function ReplayQAPage() {
           title: "Error",
           text: "Something went wrong while loading the Q&A.",
         });
+        console.log(err);
       } finally {
         setLoading(false);
       }

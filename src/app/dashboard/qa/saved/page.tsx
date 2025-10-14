@@ -35,6 +35,7 @@ export default function SavedQAPage() {
           title: "Error",
           text: "Something went wrong while fetching saved Q&A.",
         });
+        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -63,6 +64,7 @@ export default function SavedQAPage() {
         title: "Error",
         text: "Failed to delete Q&A.",
       });
+      console.log(error);
       return;
     }
 

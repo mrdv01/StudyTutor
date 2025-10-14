@@ -101,7 +101,7 @@ export default function QuizPlayPage() {
     router.push("/dashboard/quizzes");
   };
 
-  // 🧠 Quiz finished view
+  //  Quiz finished view
   if (finished) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-50">
@@ -112,7 +112,7 @@ export default function QuizPlayPage() {
           </p>
 
           <div className="text-left mb-4">
-            <h3 className="font-semibold mb-2">✅ Correct Answers:</h3>
+            <h3 className="font-semibold mb-2"> Correct Answers:</h3>
             {quiz.questions.map((q: any, i: number) => (
               <div key={i} className="mb-2 border-b pb-2">
                 <p className="font-medium text-gray-800">
@@ -138,7 +138,7 @@ export default function QuizPlayPage() {
     );
   }
 
-  // 🧩 Quiz in progress view
+  //  Quiz in progress view
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
       <Card className="max-w-xl w-full p-6 shadow-md bg-white relative">
