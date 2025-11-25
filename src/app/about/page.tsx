@@ -17,7 +17,7 @@ export default function AboutPage() {
         className="text-center mb-12"
       >
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800">
-          About <span className="text-blue-600">StudyWithAI</span>
+          About <span className="text-blue-600">PrepzenX</span>
         </h1>
         <p className="text-gray-600 max-w-2xl mx-auto mt-4 text-lg">
           Study smarter, not harder — your personal AI Tutor for notes, quizzes,
@@ -36,15 +36,15 @@ export default function AboutPage() {
             Our Mission
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            At <strong>StudyWithAI</strong>, our mission is to make learning
-            more interactive, personalized, and enjoyable. We believe every
-            student deserves an AI-powered study companion — one that can
-            simplify complex topics, summarize notes, generate quizzes, and help
-            prepare for exams efficiently.
+            At <strong>PrepzenX</strong>, our mission is to make learning more
+            interactive, personalized, and enjoyable. We believe every student
+            deserves an AI-powered study companion — one that can simplify
+            complex topics, summarize notes, generate quizzes, and help prepare
+            for exams efficiently.
           </p>
           <p className="text-gray-600 mt-3">
             Whether you’re revising for a test or exploring new concepts,
-            StudyWithAI adapts to your pace and learning style.
+            PrepzenX adapts to your pace and learning style.
           </p>
         </motion.div>
 
@@ -61,7 +61,7 @@ export default function AboutPage() {
       {/* Features Section */}
       <div className="mt-20">
         <h2 className="text-2xl font-semibold text-center mb-10 text-gray-800">
-          What You Can Do with StudyWithAI
+          What You Can Do with PrepzenX
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <FeatureCard
@@ -87,7 +87,7 @@ export default function AboutPage() {
           <FeatureCard
             icon={<Brain className="w-8 h-8 text-pink-600" />}
             title="Personalized Learning"
-            description="StudyWithAI adapts to your style and strengths to help you focus where it matters most."
+            description="PrepzenX adapts to your style and strengths to help you focus where it matters most."
           />
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function AboutPage() {
           Ready to make studying fun and smart?
         </h2>
         <p className="text-gray-600 mt-2 mb-6">
-          Join StudyWithAI today and let your AI Tutor take your learning to the
+          Join PrepzenX today and let your AI Tutor take your learning to the
           next level.
         </p>
         <Button asChild size="lg" className="px-8 py-6 text-lg">
