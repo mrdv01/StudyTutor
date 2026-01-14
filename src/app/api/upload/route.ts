@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
-import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
-
+import { PDFParse } from "pdf-parse";
 import { createClient } from "@/lib/supabase/server";
-
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "pdfjs-dist/legacy/build/pdf.worker.mjs";
 
 export async function POST(req: Request) {
   const supabase = await createClient();
@@ -15,6 +11,7 @@ export async function POST(req: Request) {
   if (!user) {
     return new Response("Unauthorized", { status: 401 });
   }
+
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File;
@@ -23,28 +20,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // Convert file to ArrayBuffer
-    const arrayBuffer = await file.arrayBuffer();
+    // Convert File → Buffer
+    const buffer = Buffer.from(await file.arrayBuffer());
 
-    // Load PDF using pdfjs
-    const loadingTask = pdfjsLib.getDocument({
-      data: arrayBuffer,
-      useSystemFonts: true,
+    const parser = new PDFParse({ data: buffer });
+
+    const result = await parser.getText();
+    await parser.destroy();
+
+    return NextResponse.json({
+      text: result.text.trim(),
+      pages: result.total,
     });
-
-    const pdf = await loadingTask.promise;
-
-    let extractedText = "";
-
-    // Extract text from all pages
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const textContent = await page.getTextContent();
-      const pageText = textContent.items.map((item: any) => item.str).join(" ");
-      extractedText += pageText + "\n";
-    }
-
-    return NextResponse.json({ text: extractedText.trim() });
   } catch (err) {
     console.error("PDF Parse Error:", err);
     return NextResponse.json(
