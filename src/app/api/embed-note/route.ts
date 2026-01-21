@@ -15,6 +15,7 @@ export async function POST(req: Request) {
     console.log(`Generating embeddings for ${chunks.length} chunks...`);
 
     //  Generate embeddings using the new Gemini Embedding API
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await (ai.models as any).embedContent({
       model: "gemini-embedding-001",
       contents: chunks,
@@ -22,7 +23,9 @@ export async function POST(req: Request) {
       outputDimensionality: 768, // balanced choice (saves space)
     });
 
-    const embeddings = response.embeddings.map((e: any) => e.values);
+    const embeddings = response.embeddings.map(
+      (e: { values: number[] }) => e.values
+    );
     const { data: noteData } = await supabase
       .from("notes")
       .select("user_id")
@@ -32,7 +35,7 @@ export async function POST(req: Request) {
     const userId = noteData?.user_id;
     //  Save each chunk + embedding into Supabase
     const { error } = await supabase.from("note_chunks").insert(
-      chunks.map((chunk: any, i: number) => ({
+      chunks.map((chunk: string, i: number) => ({
         note_id: noteId,
         user_id: userId,
         content: chunk,

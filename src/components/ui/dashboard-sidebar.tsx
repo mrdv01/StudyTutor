@@ -5,7 +5,6 @@ import {
   MessageSquare,
   Upload,
   BookOpen,
-  Settings,
   X,
   ClipboardList,
   HelpCircle,

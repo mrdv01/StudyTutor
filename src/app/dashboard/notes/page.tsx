@@ -61,7 +61,7 @@ export default function NotesPage() {
     };
 
     fetchNotes();
-  }, []);
+  }, [supabase]);
 
   //  Summarize handler
   const handleSummarize = async (noteId: string) => {

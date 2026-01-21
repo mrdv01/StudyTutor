@@ -86,7 +86,7 @@ Generate a quiz based on these notes:
     let quizData;
     try {
       quizData = JSON.parse(text);
-    } catch (err) {
+    } catch (_err) {
       console.error("Failed to parse Gemini output:", text);
       return NextResponse.json(
         { error: "Invalid quiz format from Gemini." },
@@ -96,16 +96,18 @@ Generate a quiz based on these notes:
 
     //  Sanitize quiz: allow only MCQ & True/False
     quizData.questions = quizData.questions.filter(
-      (q: any) => q.type === "mcq" || q.type === "truefalse"
+      (q: { type: string }) => q.type === "mcq" || q.type === "truefalse"
     );
 
     //  Ensure MCQs have valid options
-    quizData.questions = quizData.questions.map((q: any) => {
-      if (q.type === "mcq" && (!q.options || q.options.length < 2)) {
-        q.options = ["Option A", "Option B", "Option C", "Option D"];
+    quizData.questions = quizData.questions.map(
+      (q: { type: string; options?: string[] }) => {
+        if (q.type === "mcq" && (!q.options || q.options.length < 2)) {
+          q.options = ["Option A", "Option B", "Option C", "Option D"];
+        }
+        return q;
       }
-      return q;
-    });
+    );
 
     // console.log(" Quiz generated:", quizData);
 

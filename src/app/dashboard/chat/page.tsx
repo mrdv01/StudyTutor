@@ -32,7 +32,7 @@ export default function ChatPage() {
       setUserId(user?.id || null);
     };
     fetchUser();
-  }, []);
+  }, [supabase.auth]);
 
   useEffect(() => {
     const fetchNoteTitle = async () => {
@@ -46,7 +46,7 @@ export default function ChatPage() {
       if (!error && data) setNoteTitle(data.title);
     };
     fetchNoteTitle();
-  }, [noteId]);
+  }, [noteId, supabase]);
 
   const handleSend = async () => {
     if (!input.trim()) return;

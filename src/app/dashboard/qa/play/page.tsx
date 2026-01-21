@@ -20,12 +20,22 @@ import { ClipLoader } from "react-spinners";
 
 const supabase = createClient();
 
+interface QAItem {
+  question: string;
+  answer: string;
+}
+
+interface QAData {
+  title: string;
+  qa: QAItem[];
+}
+
 export default function QAPlayPage() {
   const searchParams = useSearchParams();
   const noteId = searchParams.get("noteId");
   const router = useRouter();
 
-  const [qaData, setQaData] = useState<any>(null);
+  const [qaData, setQaData] = useState<QAData | null>(null);
   const [current, setCurrent] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -51,6 +61,7 @@ export default function QAPlayPage() {
             text: "Could not generate Q&A. Try again later.",
           });
       } catch (err) {
+        console.error(err);
         Swal.fire({
           icon: "error",
           title: "Error",
@@ -65,6 +76,7 @@ export default function QAPlayPage() {
   }, [noteId]);
 
   const handleSaveQA = async () => {
+    if (!qaData) return;
     setSaving(true);
     const {
       data: { user },
@@ -108,6 +120,7 @@ export default function QAPlayPage() {
         });
       }
     } catch (err) {
+      console.error(err);
       Swal.fire({
         icon: "error",
         title: "Network Error",

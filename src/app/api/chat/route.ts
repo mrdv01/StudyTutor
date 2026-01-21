@@ -17,6 +17,7 @@ export async function POST(req: Request) {
     const { messages, noteId } = await req.json();
     const userMsg = messages[messages.length - 1].content;
     // 1 Create embedding for user's query
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const queryEmbedding = await (ai.models as any).embedContent({
       model: "gemini-embedding-001",
       contents: [userMsg],
@@ -46,12 +47,15 @@ export async function POST(req: Request) {
     }
 
     // Combine top chunks into context text
-    const contextText = matches?.map((m: any) => m.content).join("\n") || "";
+    const contextText =
+      matches?.map((m: { content: string }) => m.content).join("\n") || "";
     // Build conversation history
-    const history = messages.slice(0, -1).map((msg: any) => ({
-      role: msg.role === "user" ? "user" : "model",
-      parts: [{ text: msg.content }],
-    }));
+    const history = messages
+      .slice(0, -1)
+      .map((msg: { role: string; content: string }) => ({
+        role: msg.role === "user" ? "user" : "model",
+        parts: [{ text: msg.content }],
+      }));
 
     const chat = ai.chats.create({
       model: "gemini-2.5-flash",

@@ -17,7 +17,9 @@ export default function QuizPlayPage() {
   const params = useSearchParams();
   const noteId = params.get("noteId");
   const [loading, setLoading] = useState(true);
-  const [quiz, setQuiz] = useState<any>(null);
+  const [quiz, setQuiz] = useState<{
+    questions: { question: string; answer: string; options?: string[] }[];
+  } | null>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
@@ -54,6 +56,7 @@ export default function QuizPlayPage() {
     );
   }
 
+  if (!quiz) return null;
   const total = quiz.questions.length;
   const question = quiz.questions[current];
   const progress = ((current + 1) / total) * 100;
@@ -117,16 +120,21 @@ export default function QuizPlayPage() {
 
           <div className="text-left mb-4">
             <h3 className="font-semibold mb-2"> Correct Answers:</h3>
-            {quiz.questions.map((q: any, i: number) => (
-              <div key={i} className="mb-2 border-b pb-2">
-                <p className="font-medium text-gray-800">
-                  {i + 1}. {q.question}
-                </p>
-                <p className="text-sm text-green-600">
-                  Correct answer: <strong>{q.answer}</strong>
-                </p>
-              </div>
-            ))}
+            {quiz.questions.map(
+              (
+                q: { question: string; answer: string; options?: string[] },
+                i: number
+              ) => (
+                <div key={i} className="mb-2 border-b pb-2">
+                  <p className="font-medium text-gray-800">
+                    {i + 1}. {q.question}
+                  </p>
+                  <p className="text-sm text-green-600">
+                    Correct answer: <strong>{q.answer}</strong>
+                  </p>
+                </div>
+              )
+            )}
           </div>
 
           <div className="flex justify-center gap-4 mt-6">

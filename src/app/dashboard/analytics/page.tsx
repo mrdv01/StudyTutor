@@ -52,12 +52,12 @@ export default function AnalyticsPage() {
 
       const averageScore = quizzes.data?.length
         ? quizzes.data.reduce(
-            (acc: number, q: any) => acc + (q.score || 0),
+            (acc: number, q: { score: number }) => acc + (q.score || 0),
             0
           ) / quizzes.data.length
         : 0;
 
-      const quizHistory = quizzes.data?.map((q: any, i: number) => ({
+      const quizHistory = quizzes.data?.map((q: { score: number }, i: number) => ({
         name: `Quiz ${i + 1}`,
         score: q.score,
       }));
@@ -74,7 +74,7 @@ export default function AnalyticsPage() {
     };
 
     fetchStats();
-  }, []);
+  }, [supabase]);
 
   if (loading)
     return (
