@@ -47,8 +47,11 @@ Content: """${note.content}"""
           contents: [{ role: "user", parts: [{ text: prompt }] }],
         });
         break; // success — exit loop
-      } catch (err: any) {
-        if (err?.error?.code === 503 && retries > 1) {
+      } catch (err: unknown) {
+        if (
+          (err as { error?: { code?: number } })?.error?.code === 503 &&
+          retries > 1
+        ) {
           console.warn("Model overloaded, retrying...");
           await new Promise((res) => setTimeout(res, 2000)); // wait 2s
           retries--;
@@ -73,10 +76,10 @@ Content: """${note.content}"""
     if (updateError) throw updateError;
 
     return NextResponse.json({ summary: text });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Summarize Note Error:", err);
 
-    if (err?.error?.code === 503) {
+    if ((err as { error?: { code?: number } })?.error?.code === 503) {
       return NextResponse.json(
         {
           error:

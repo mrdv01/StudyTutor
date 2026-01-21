@@ -2,6 +2,7 @@
  * Safely extracts text output from Gemini's API response.
  * Works across SDK versions (old and new).
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function extractGeminiText(result: any): string {
   try {
     //  New SDK format (v0.8+)

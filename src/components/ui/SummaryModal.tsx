@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { FileDown, ClipboardCopy, X } from "lucide-react";
+import { FileDown, ClipboardCopy } from "lucide-react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { jsPDF } from "jspdf";

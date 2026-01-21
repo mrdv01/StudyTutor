@@ -27,8 +27,21 @@ import {
 
 const COLORS = ["#2563eb", "#22c55e", "#facc15", "#ef4444"];
 
+interface Quiz {
+  score: number;
+  created_at?: string;
+}
+
+interface Stats {
+  totalNotes: number;
+  totalQuizzes: number;
+  totalQA: number;
+  averageScore: number;
+  quizHistory: { name: string; score: number }[];
+}
+
 export default function AnalyticsPage() {
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
 
@@ -52,15 +65,15 @@ export default function AnalyticsPage() {
 
       const averageScore = quizzes.data?.length
         ? quizzes.data.reduce(
-            (acc: number, q: any) => acc + (q.score || 0),
+            (acc: number, q: Quiz) => acc + (q.score || 0),
             0
           ) / quizzes.data.length
         : 0;
 
-      const quizHistory = quizzes.data?.map((q: any, i: number) => ({
+      const quizHistory = quizzes.data?.map((q: Quiz, i: number) => ({
         name: `Quiz ${i + 1}`,
         score: q.score,
-      }));
+      })) || [];
 
       setStats({
         totalNotes,
@@ -74,7 +87,7 @@ export default function AnalyticsPage() {
     };
 
     fetchStats();
-  }, []);
+  }, [supabase]);
 
   if (loading)
     return (
@@ -83,6 +96,8 @@ export default function AnalyticsPage() {
         <p className="text-gray-600 mt-4 text-sm">Fetching your progress...</p>
       </div>
     );
+
+  if (!stats) return null;
 
   return (
     <div className="p-6 space-y-6">

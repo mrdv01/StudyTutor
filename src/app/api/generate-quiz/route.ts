@@ -4,6 +4,13 @@ import { createClient } from "@/lib/supabase/server";
 import { extractGeminiText, cleanJsonResponse } from "@/lib/gemini-utils";
 const ai = new GoogleGenAI({});
 
+interface QuizQuestion {
+  type: string;
+  question: string;
+  options?: string[];
+  answer: string;
+}
+
 export async function POST(req: Request) {
   try {
     const { noteId } = await req.json();
@@ -87,7 +94,7 @@ Generate a quiz based on these notes:
     try {
       quizData = JSON.parse(text);
     } catch (err) {
-      console.error("Failed to parse Gemini output:", text);
+      console.error("Failed to parse Gemini output:", text, err);
       return NextResponse.json(
         { error: "Invalid quiz format from Gemini." },
         { status: 500 }
@@ -96,11 +103,11 @@ Generate a quiz based on these notes:
 
     //  Sanitize quiz: allow only MCQ & True/False
     quizData.questions = quizData.questions.filter(
-      (q: any) => q.type === "mcq" || q.type === "truefalse"
+      (q: QuizQuestion) => q.type === "mcq" || q.type === "truefalse"
     );
 
     //  Ensure MCQs have valid options
-    quizData.questions = quizData.questions.map((q: any) => {
+    quizData.questions = quizData.questions.map((q: QuizQuestion) => {
       if (q.type === "mcq" && (!q.options || q.options.length < 2)) {
         q.options = ["Option A", "Option B", "Option C", "Option D"];
       }
