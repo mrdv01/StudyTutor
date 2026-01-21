@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const { userId, noteId, quiz, score } = await req.json();
     const supabase = await createClient();
 
-    const { data: _data, error } = await supabase
+    const { error } = await supabase
       .from("quizzes")
       .insert([
         { user_id: userId, note_id: noteId, title: quiz.title, quiz, score },

@@ -27,8 +27,16 @@ import {
 
 const COLORS = ["#2563eb", "#22c55e", "#facc15", "#ef4444"];
 
+interface Stats {
+  totalNotes: number;
+  totalQuizzes: number;
+  totalQA: number;
+  averageScore: number;
+  quizHistory: { name: string; score: number }[];
+}
+
 export default function AnalyticsPage() {
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
 
@@ -67,7 +75,7 @@ export default function AnalyticsPage() {
         totalQuizzes,
         totalQA,
         averageScore,
-        quizHistory,
+        quizHistory: quizHistory || [],
       });
 
       setLoading(false);
@@ -83,6 +91,8 @@ export default function AnalyticsPage() {
         <p className="text-gray-600 mt-4 text-sm">Fetching your progress...</p>
       </div>
     );
+
+  if (!stats) return null;
 
   return (
     <div className="p-6 space-y-6">

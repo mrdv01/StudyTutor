@@ -86,7 +86,7 @@ Generate a quiz based on these notes:
     let quizData;
     try {
       quizData = JSON.parse(text);
-    } catch (_err) {
+    } catch {
       console.error("Failed to parse Gemini output:", text);
       return NextResponse.json(
         { error: "Invalid quiz format from Gemini." },
