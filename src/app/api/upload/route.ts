@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 import { NextResponse } from "next/server";
-import { PDFParse } from "pdf-parse";
 import { createClient } from "@/lib/supabase/server";
+
+// pdf-parse v1.1.1 is CJS
+const pdfParse = require("pdf-parse");
 
 export async function POST(req: Request) {
   const supabase = await createClient();
@@ -9,7 +13,7 @@ export async function POST(req: Request) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
@@ -20,23 +24,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // Convert File → Buffer
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    const parser = new PDFParse({ data: buffer });
-
-    const result = await parser.getText();
-    await parser.destroy();
+    const result = await pdfParse(buffer);
 
     return NextResponse.json({
       text: result.text.trim(),
-      pages: result.total,
+      pages: result.numpages,
     });
   } catch (err) {
-    console.error("PDF Parse Error:", err);
+    console.error("PDF parse failed:", err);
     return NextResponse.json(
       { error: "Failed to extract text" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
