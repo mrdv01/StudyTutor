@@ -17,7 +17,6 @@ export async function POST(req: Request) {
     const { messages, noteId } = await req.json();
     const userMsg = messages[messages.length - 1].content;
     // 1 Create embedding for user's query
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const queryEmbedding = await (ai.models as any).embedContent({
       model: "gemini-embedding-001",
       contents: [userMsg],
@@ -47,9 +46,9 @@ export async function POST(req: Request) {
     }
 
     // Combine top chunks into context text
-    const contextText = matches?.map((m: { content: string }) => m.content).join("\n") || "";
+    const contextText = matches?.map((m: any) => m.content).join("\n") || "";
     // Build conversation history
-    const history = messages.slice(0, -1).map((msg: { role: string; content: string }) => ({
+    const history = messages.slice(0, -1).map((msg: any) => ({
       role: msg.role === "user" ? "user" : "model",
       parts: [{ text: msg.content }],
     }));
@@ -106,7 +105,7 @@ ${contextText || "No notes were provided."}
         "Transfer-Encoding": "chunked",
       },
     });
-  } catch (err: unknown) {
+  } catch (err) {
     console.error("Gemini Chat Error:", err);
     return new Response("Error: Unable to get a response right now.", {
       status: 500,

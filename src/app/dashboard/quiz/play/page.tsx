@@ -12,23 +12,12 @@ import Swal from "sweetalert2";
 import { PartyPopper, Save } from "lucide-react";
 const supabase = createClient();
 
-interface Question {
-  question: string;
-  options?: string[];
-  answer: string;
-}
-
-interface Quiz {
-  title: string;
-  questions: Question[];
-}
-
 export default function QuizPlayPage() {
   const router = useRouter();
   const params = useSearchParams();
   const noteId = params.get("noteId");
   const [loading, setLoading] = useState(true);
-  const [quiz, setQuiz] = useState<Quiz | null>(null);
+  const [quiz, setQuiz] = useState<any>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
@@ -64,10 +53,6 @@ export default function QuizPlayPage() {
       </div>
     );
   }
-
-
-
-  if (!quiz) return <div>Quiz not found</div>;
 
   const total = quiz.questions.length;
   const question = quiz.questions[current];
@@ -132,7 +117,7 @@ export default function QuizPlayPage() {
 
           <div className="text-left mb-4">
             <h3 className="font-semibold mb-2"> Correct Answers:</h3>
-            {quiz.questions.map((q: Question, i: number) => (
+            {quiz.questions.map((q: any, i: number) => (
               <div key={i} className="mb-2 border-b pb-2">
                 <p className="font-medium text-gray-800">
                   {i + 1}. {q.question}

@@ -11,16 +11,9 @@ import { Trash2, Play } from "lucide-react";
 
 const supabase = createClient();
 
-interface SavedQuiz {
-  id: string;
-  title: string;
-  created_at: string;
-  score?: number;
-}
-
 export default function SavedQuizzesPage() {
   const router = useRouter();
-  const [quizzes, setQuizzes] = useState<SavedQuiz[]>([]);
+  const [quizzes, setQuizzes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   //  Fetch saved quizzes
@@ -38,7 +31,6 @@ export default function SavedQuizzesPage() {
           });
         }
       } catch (error) {
-        console.error(error);
         Swal.fire({
           icon: "error",
           title: "Network Error",

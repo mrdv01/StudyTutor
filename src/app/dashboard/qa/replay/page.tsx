@@ -13,22 +13,12 @@ import { ClipLoader } from "react-spinners";
 
 const supabase = createClient();
 
-interface QAItem {
-  question: string;
-  answer: string;
-}
-
-interface QAData {
-  title: string;
-  qa: QAItem[];
-}
-
 export default function ReplayQAPage() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id"); // saved_qa.id
   const router = useRouter();
 
-  const [qaData, setQaData] = useState<QAData | null>(null);
+  const [qaData, setQaData] = useState<any>(null);
   const [current, setCurrent] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -84,10 +74,9 @@ export default function ReplayQAPage() {
     };
 
     fetchQA();
-  }, [id, router]);
+  }, [id]);
 
   const handleNext = () => {
-    if (!qaData) return;
     if (current + 1 < qaData.qa.length) {
       setCurrent(current + 1);
       setShowAnswer(false);

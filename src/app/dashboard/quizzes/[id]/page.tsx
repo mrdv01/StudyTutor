@@ -13,19 +13,7 @@ export default function ReplayQuizPage() {
   const router = useRouter();
   const quizId = params.id as string;
   const [loading, setLoading] = useState(true);
-
-  interface Question {
-    question: string;
-    options?: string[];
-    answer: string;
-  }
-
-  interface Quiz {
-    title: string;
-    questions: Question[];
-  }
-
-  const [quiz, setQuiz] = useState<Quiz | null>(null);
+  const [quiz, setQuiz] = useState<any>(null);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
@@ -58,9 +46,6 @@ export default function ReplayQuizPage() {
     );
   }
   // console.log(quiz);
-
-  if (!quiz) return <div>Quiz not found</div>;
-
   const total = quiz.questions.length;
   const question = quiz.questions[current];
   const progress = ((current + 1) / total) * 100;

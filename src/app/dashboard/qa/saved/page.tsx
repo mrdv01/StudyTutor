@@ -11,21 +11,9 @@ import { Trash2, Play } from "lucide-react";
 
 const supabase = createClient();
 
-interface QAItem {
-  question: string;
-  answer: string;
-}
-
-interface SavedQA {
-  id: string;
-  title: string;
-  created_at: string;
-  qa: QAItem[];
-}
-
 export default function SavedQAPage() {
   const router = useRouter();
-  const [qas, setQAs] = useState<SavedQA[]>([]);
+  const [qas, setQAs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch saved Q&A
